@@ -1,5 +1,7 @@
 package com.mb.app.ws.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.mb.app.ws.dtos.UserDTO;
@@ -62,9 +64,13 @@ public class UserServiceImpl implements UserService {
 							 .orElseThrow(() -> new RuntimeException("UserId::"+userId+" Not Exists"));
 	}
 
-	
 	private String deleteUser(UserEntity entity) {
 		userRepository.deleteByUserId(entity.getUserId());
 		return "User Deleted Successfully";
+	}
+	
+	@Override
+	public List<UserDTO> findALl() {
+		return userMapper.toListOfDtos(userRepository.findAll());
 	}
 }

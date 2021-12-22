@@ -1,6 +1,7 @@
 package com.mb.app.ws.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,5 +55,10 @@ public class UserController {
 	@DeleteMapping("/{userId}")
 	public String deleteUserByUserId(@PathVariable String userId) {
 		return userService.deleteUserByUserId(userId);
+	}
+	
+	@GetMapping
+	public List<UserResponse> getAllUsers() {
+		return userMapper.toListOfDResponses(userService.findALl());
 	}
 }

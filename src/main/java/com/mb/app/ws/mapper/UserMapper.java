@@ -1,5 +1,7 @@
 package com.mb.app.ws.mapper;
 
+import java.util.List;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -25,4 +27,8 @@ public interface UserMapper {
 	
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	public void updateUser(UserDTO dto, @MappingTarget UserEntity entity);
+	
+	public List<UserDTO> toListOfDtos(List<UserEntity> entities);
+	
+	public List<UserResponse> toListOfDResponses(List<UserDTO> dtos);
 }
