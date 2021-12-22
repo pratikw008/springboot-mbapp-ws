@@ -1,18 +1,11 @@
 package com.mb.app.ws.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +14,9 @@ import lombok.Setter;
 @Table(name = "users")
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
-public class UserEntity {
+//@SQLDelete(sql = "update users set is_deleted=true where user_id=?")
+//@Where(clause = "is_deleted = false")
+public class UserEntity extends Auditable<String> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,11 +42,11 @@ public class UserEntity {
 	@Column(nullable = false)	//columnDefinition = "boolean default false"
 	private Boolean emailVerificationStatus = false;
 	
-	@CreatedDate
-	@Column(updatable = false)
-	private LocalDateTime createdAt;
+	@Column(nullable = false)
+	private boolean isDeleted = Boolean.FALSE;
 	
-	@LastModifiedDate
-	@Column(insertable = false)
-	private LocalDateTime modifiedAt;
+	/*@PreRemove
+	private void preRemove() {
+		this.isDeleted = true;
+	}*/
 }

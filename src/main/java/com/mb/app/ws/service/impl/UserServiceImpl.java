@@ -62,8 +62,9 @@ public class UserServiceImpl implements UserService {
 							 .orElseThrow(() -> new RuntimeException("UserId::"+userId+" Not Exists"));
 	}
 
+	
 	private String deleteUser(UserEntity entity) {
-		userRepository.delete(entity);
+		userRepository.deleteByUserId(entity.getUserId());
 		return "User Deleted Successfully";
 	}
 }
