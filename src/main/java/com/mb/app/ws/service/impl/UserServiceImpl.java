@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mb.app.ws.dtos.UserDTO;
+import com.mb.app.ws.exceptions.ErrorMessages;
+import com.mb.app.ws.exceptions.UserNotFoundException;
 import com.mb.app.ws.mapper.UserMapper;
 import com.mb.app.ws.model.UserEntity;
 import com.mb.app.ws.repository.UserRepository;
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO getUserByUserId(String userId) {
 		return userRepository.findByUserId(userId)
 							 .map(userMapper::userToUserDto)
-							 .orElseThrow(() -> new RuntimeException("UserId::"+userId+" Not Exists"));
+							 .orElseThrow(() -> new UserNotFoundException(ErrorMessages.USER_NOT_FOUND.getErrorMessage()));
 	}
 	
 	@Override
