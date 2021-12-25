@@ -3,6 +3,8 @@ package com.mb.app.ws.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +37,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+	public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest) {
 		UserDTO userDTO = userService.createUser(userMapper.userRequestToDto(userRequest));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{userId}").buildAndExpand(userDTO.getUserId()).toUri();
 		return ResponseEntity.created(location).body(userMapper.userDtoToUserResponse(userDTO));
